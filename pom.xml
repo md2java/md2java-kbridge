@@ -7,11 +7,37 @@
 	<artifactId>md2java-kbridge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>md2java-kbridge</name>
-	<description>Demo project for Spring Boot</description>
+	<description>md2java-kbridge to kafka and mq bridge</description>
+	<url>https://github.com/md2java/md2java-kbridge</url>
 	<properties>
 		<java.version>1.8</java.version>
 		<spring.boot.version>2.7.17</spring.boot.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>mohd amir</name>
+			<email>amir87.java@gmail.com</email>
+			<organization>io.github.md2java</organization>
+			<organizationUrl>https://github.com/md2java/</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/md2java/md2java-kbridge</url>
+		<connection>scm:git@github.com:md2java/md2java-kbridge.git</connection>
+		<developerConnection>scm:git@github.com:md2java/md2java-kbridge.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -72,6 +98,18 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>
+				https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<repositories>
 		<repository>
 			<id>confluent</id>
@@ -81,6 +119,32 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+     		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
