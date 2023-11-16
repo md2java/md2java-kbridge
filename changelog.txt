@@ -1,0 +1,8 @@
+1.0.0:  initial version[support only for IBM mq and kafka with avro schema registry]
+-----------------------
+1) kafka-with-avro-registry to ibm mq bridge 
+2) [ONE to MANY][mq to kafka & kafka to mq] support
+3) retry upto 3 times[interval of 1 sec] -if not success call callback method[handleOnFail] to consumer.
+
+
+
