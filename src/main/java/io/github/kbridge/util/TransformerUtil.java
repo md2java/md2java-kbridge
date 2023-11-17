@@ -9,6 +9,7 @@ import javax.jms.Message;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.github.kbridge.props.EtlProperties;
@@ -21,6 +22,9 @@ public class TransformerUtil {
 	
 	@Autowired
 	private EtlProperties etlProperties;
+	
+	@Value("${app.mq.protocol.pre://}")
+	private String mqProtocolPrefix;
 
 	public List<KafkaPayloadTransformer>  findKafkaTransformer(String topic) {
 		List<KafkaPayloadTransformer> kafkaPayloadTransformer = etlProperties.getKafkaMap().get(topic);
@@ -57,7 +61,7 @@ public class TransformerUtil {
 		String mqTopicName = null;
 		try {
 			mqTopicName = message.getJMSDestination().toString();
-			mqTopicName  = StringUtils.substringAfter(mqTopicName, "///");
+			mqTopicName  = StringUtils.substringAfterLast(mqTopicName, mqProtocolPrefix);
 		} catch (JMSException e) {
 			
 		}
