@@ -5,5 +5,7 @@
 3) retry upto 3 times[interval of 1 sec] -if not success call callback method[handleOnFail] to consumer.
 
 
-1.0.2:[ support string serilaization with avro]
+1.0.2:[ support string serialization with avro]
+
+1.1.0:[ added active support with ibmmq]
  
