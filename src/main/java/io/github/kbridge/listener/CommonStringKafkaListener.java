@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-@ConditionalOnProperty(name = "spring.kafka.consumer.value-deserializer",havingValue = "io.confluent.kafka.serializers.KafkaAvroDeserializer")
-public class CommonKafkaListener {
+@ConditionalOnProperty(name = "spring.kafka.consumer.value-deserializer",havingValue = "org.apache.kafka.common.serialization.StringDeserializer")
+public class CommonStringKafkaListener {
 
 	@Autowired
 	private TransformerUtil transformerUtil;
@@ -31,11 +30,11 @@ public class CommonKafkaListener {
 	private MessagingTemplate messagingTemplate;
 
 	@KafkaListener(topics = "${app.kafka.topics}", groupId = "ami-topic-id", autoStartup = "${app.kafka.enabled:false}", concurrency = "${app.kafka.threds:3}")
-	public void fromKafka(ConsumerRecord<String, GenericRecord> consumerRecord) {
+	public void fromKafka(ConsumerRecord<String, String> consumerRecord) {
 		String topic = consumerRecord.topic();
 		List<KafkaPayloadTransformer> transformers = transformerUtil.findKafkaTransformer(topic);
 		for (KafkaPayloadTransformer transformer : transformers) {
-			Object tranformToMq = transformer.tranformToMq(consumerRecord);
+			Object tranformToMq = transformer.tranformStringToMq(consumerRecord);
 			if(Objects.isNull(tranformToMq)) {
 				throw new RuntimeException("KafkaPayloadTransformer.transferToMq or KafkaPayloadTransformer.transformStringToMq must be ovveride properly");
 			}
