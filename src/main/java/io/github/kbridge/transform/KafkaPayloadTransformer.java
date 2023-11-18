@@ -4,11 +4,8 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.messaging.support.GenericMessage;
 
-public interface KafkaPayloadTransformer {
+public interface KafkaPayloadTransformer extends PayloadTransformer {
 	Object tranformToMq(ConsumerRecord<String, GenericRecord> records);
-	String mqTopic();
-	String kafkaTopic();
-	boolean isPubSubDomain();
 	default void handleOnFail(Exception ex, GenericMessage<Object> message) {}
 
 }

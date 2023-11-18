@@ -5,10 +5,7 @@ import javax.jms.Message;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.messaging.support.GenericMessage;
 
-public interface MqPayloadTransformer {
+public interface MqPayloadTransformer extends PayloadTransformer{
 	Object transformToKafka(Message message);
-	String mqTopic();
-	String kafkaTopic();
-	boolean isPubSubDomain();
 	default void handleOnFail(Exception ex, GenericMessage<ProducerRecord<String, Object>> message) {}
 }
