@@ -9,7 +9,7 @@
 		<dependency>
 			<groupId>io.github.md2java</groupId>
 			<artifactId>md2java-kbridge</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.1</version>
 		</dependency>
 	3) add avro schema dependecy[as per your requirement]-OPTIONAL
 	<dependency>
@@ -51,4 +51,5 @@
 	1.1.0:[ added active support with ibmmq]
 	#app.mq.provider.name=ibmmq/activemq here default is ibmmq
 
+    1.1.1:[ correct logger.debug & info]
   

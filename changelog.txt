@@ -8,4 +8,7 @@
 1.0.2:[ support string serialization with avro]
 
 1.1.0:[ added active support with ibmmq]
+
+1.1.1:[ correct logger.debug & info]
+
  
