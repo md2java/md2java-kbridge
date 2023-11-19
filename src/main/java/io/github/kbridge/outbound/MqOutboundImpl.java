@@ -18,9 +18,9 @@ public class MqOutboundImpl {
 	
 	@ServiceActivator(inputChannel = "toMqChannel")
 	public void toMqHandler(GenericMessage<Object> message) {
-		log.info("received from toMqChannel: {} ", message.getPayload());
+		log.debug("received from toMqChannel: {} ", message.getPayload());
 		internalGateway.sendToMq(message);
-		log.info("sent to mq {} ",message.getHeaders().get(AppConstants.MQ_TOPIC));
+		log.debug("sent to mq {} ",message.getHeaders().get(AppConstants.MQ_TOPIC));
 
 	}
 

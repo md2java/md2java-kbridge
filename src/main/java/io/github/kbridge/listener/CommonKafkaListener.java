@@ -44,7 +44,7 @@ public class CommonKafkaListener {
 			headers.put(AppConstants.MQ_TOPIC, transformer.mqTopic());
 			GenericMessage<Object> genericMessage = new GenericMessage<>(tranformToMq, headers);
 			messagingTemplate.send(ChannelNames.TO_MQ.bean(), genericMessage);
-			log.info("sent to channel: {} ", ChannelNames.TO_MQ.bean());
+			log.debug("sent to channel: {} ", ChannelNames.TO_MQ.bean());
 		}
 	}
 

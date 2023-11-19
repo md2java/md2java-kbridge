@@ -31,7 +31,7 @@ public class CommonJmsListener implements MessageListener {
 
 	@Override
 	public void onMessage(Message message) {
-		log.info("MessageListener-received from mq ");
+		log.debug("MessageListener-received from mq ");
 		String mqTopic = transformerUtil.extractTopic(message);
 		List<MqPayloadTransformer> transformers = transformerUtil.findMqTransformer(message);
 		for (MqPayloadTransformer transformer : transformers) {
@@ -44,7 +44,7 @@ public class CommonJmsListener implements MessageListener {
 			GenericMessage<ProducerRecord<String, Object>> genericMessage = new GenericMessage<>(producerRecord,
 					headers);
 			messagingTemplate.send(ChannelNames.TO_KAFKA.bean(), genericMessage);
-			log.info("sent to : {} ", ChannelNames.TO_KAFKA.bean());
+			log.debug("sent to : {} ", ChannelNames.TO_KAFKA.bean());
 		}
 	}
 

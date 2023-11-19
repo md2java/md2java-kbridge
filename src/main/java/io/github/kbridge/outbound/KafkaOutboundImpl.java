@@ -17,8 +17,8 @@ public class KafkaOutboundImpl {
 	
 	@ServiceActivator(inputChannel = "toKafkaChannel")
 	public void toKafkaHandler(GenericMessage<ProducerRecord<String, Object>> message) {
-		log.info("received from toKafkaChannel: {} ", message.getPayload());
+		log.debug("received from toKafkaChannel: {} ", message.getPayload());
 		internalGateway.sendToKafka(message);
-		log.info("sent to kafka: {} ", message.getPayload().topic());
+		log.debug("sent to kafka: {} ", message.getPayload().topic());
 	}
 }

@@ -43,7 +43,10 @@ public class InternalGateway {
 	@Retryable(maxAttemptsExpression = "${kbridge.kafka.max-try:3}",recover = "recoverKafka")
 	public void sendToKafka(GenericMessage<ProducerRecord<String, Object>> message) {
 		try {
-			kafkaTemplate.send(message.getPayload());			
+			kafkaTemplate.send(message.getPayload());
+			String mqTopic = (String) message.getHeaders().get(AppConstants.MQ_TOPIC);
+			String kafkaTopic = (String) message.getHeaders().get(AppConstants.KAFKA_TOPIC);
+			log.info("from mq-{} => kafka-{} payload:{} sent",mqTopic,kafkaTopic,message);
 		} catch (Exception e) {
 			log.error("something went wrong: {} ",e.toString());
 			throw e;
@@ -65,6 +68,7 @@ public class InternalGateway {
 			KafkaPayloadTransformer transformer = transformerContainer.findKafkaTransformer(message.getHeaders());
 			jmsProducer = transformer.isPubSubDomain() ? jmsTemplate : queueJmsTemplate;
 			jmsProducer.convertAndSend(transformer.mqTopic(), message.getPayload());
+			log.info("from kafka-{} => mq-{} payload:{} sent",transformer.kafkaTopic(),transformer.mqTopic(),message);
 		} catch (Exception e) {
 			log.error("something went wrong: {} ",e.toString());
 			throw e;
