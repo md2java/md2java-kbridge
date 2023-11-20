@@ -8,6 +8,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.integration.core.MessagingTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.support.GenericMessage;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
+@DependsOn("mqOutboundImpl")
 @ConditionalOnProperty(name = "spring.kafka.consumer.value-deserializer",havingValue = "io.confluent.kafka.serializers.KafkaAvroDeserializer")
 public class CommonKafkaListener {
 

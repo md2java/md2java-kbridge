@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.jms.ConnectionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
+@DependsOn("kafkaOutboundImpl")
 public class TopicSubscriber {
 
 	@Autowired
