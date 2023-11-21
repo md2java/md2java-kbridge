@@ -1,6 +1,7 @@
 package io.github.kbridge.outbound;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.annotation.Poller;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class MqOutboundImpl {
 	private InternalGateway internalGateway;
 
 	
-	@ServiceActivator(inputChannel = "toMqChannel")
+	@ServiceActivator(inputChannel = "toMqChannel",poller = @Poller(fixedDelay = "${mo.fixed.delay:100}",taskExecutor = "mqOutboundExecutor"))
 	public void toMqHandler(GenericMessage<Object> message) {
 		log.debug("received from toMqChannel: {} ", message.getPayload());
 		internalGateway.sendToMq(message);
